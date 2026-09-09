@@ -1,0 +1,22 @@
+/** Immutable world and gameplay policy. Distances use the normalized shoe length. */
+export const GAME_CONFIG = Object.freeze({
+  shoeLength: 100,
+  minRatio: 20,
+  maxRatio: 200,
+  ratioStep: 5,
+  health: 3,
+  gravityTurnSpeed: Math.PI / 90,
+  gravityTurnMinSeconds: 18,
+  gravityTurnRangeSeconds: 10,
+  gravityAxisBlend: 0.55,
+  gravityAxisSpread: 0.8,
+  jumpSpeed: 6.8 * Math.SQRT2,
+  gravityAcceleration: 15,
+  runSpeed: 4.6,
+  dashMultiplier: 3,
+  dashDuration: 0.3,
+  dashCooldown: 1.7,
+  avatarHeight: 1.8,
+  waveSeconds: 25,
+  maxFrameStep: 0.05,
+});

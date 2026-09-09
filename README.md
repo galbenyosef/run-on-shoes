@@ -1,92 +1,100 @@
-# run-on-shoes
+# Run on Shoes · 微步 MICROSTRIDE
 
+在巨型鞋子表面奔跑、跳跃和冲刺，躲避天空中的激光与陨石。由两张参考图生成的鞋子和角色模型构成真实三维关卡。
 
+这是 **React + TypeScript + Three.js 的纯前端游戏**。Vite 构建输出到 `dist/`，可直接部署到 GitHub Pages 或其他静态 HTTP 托管。运行时无需 Node 服务、Hi3D API、密钥、数据库或外部模型 CDN；Node 仅用于安装、开发和构建。
 
-## Getting started
+## 本地运行
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+需要 Node.js 22.13+ 和 npm。
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin http://172.31.0.3:8099/hi3dreamer/game/run-on-shoes.git
-git branch -M main
-git push -uf origin main
+```sh
+./setup.sh
+npm run dev
 ```
 
-## Integrate with your tools
+`setup.sh` 安装锁定依赖并运行类型检查、测试、生产构建、静态资源验证。`dev_setup.sh` 执行完全相同的流程。两者共同使用 `scripts/setup_common.sh`，均通过 `PATH` 选择 Node/npm，并沿用相同的 npm 环境配置。
 
-- [ ] [Set up project integrations](http://172.31.0.3:8099/hi3dreamer/game/run-on-shoes/-/settings/integrations)
+已安装依赖时可直接执行：
 
-## Collaborate with your team
+```sh
+npm run dev       # 开发服务器，地址以终端输出为准
+npm run check     # 类型检查、测试、构建、静态 HTTP 检查
+npm run lint
+npm run preview   # 预览 dist/ 中的生产版本
+```
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+通过 HTTP(S) 打开游戏，不能直接双击 `index.html` 使用 file:// 加载模块和 glTF。生产产物只有静态文件，没有服务端入口。
 
-## Test and Deploy
+## GitHub Pages
 
-Use the built-in continuous integration in GitLab.
+1. 将该仓库内容推送到自己的 GitHub 仓库，使用 `main` 分支。
+2. 在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。
+3. 推送 `main` 或手动运行 **Deploy game to GitHub Pages** 工作流。检查通过后，它会发布 `dist/`；页面地址见工作流的部署结果。
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+仓库已提供 [Pages 工作流](.github/workflows/pages.yml)。Pull Request 只进行构建和检查，不部署。当前本地仓库原有 `origin` 为 GitLab；迁移没有修改你的远端配置。发布到 GitHub 前需要使用对应的 GitHub 仓库。
 
-***
+Vite 使用 `base: './'`，模型也按页面路径加载。同一份产物支持 `https://用户名.github.io/仓库名/`、站点根目录和自定义域名，不要求仓库一定叫 `run-on-shoes`。网页内返回首页的链接也使用相对路径。配置依据：[Vite 静态部署](https://vite.dev/guide/static-deploy.html)及[相对 base](https://vite.dev/guide/build.html#relative-base)。
 
-# Editing this README
+如使用其他静态托管，只需上传 `npm run build` 生成的整个 `dist/` 目录。
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+## 玩法
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+- 开场展示整只鞋，可拖动旋转和滚轮缩放。
+- 角色身高与鞋长默认 1:100，可在 1:20–1:200 之间调整。
+- WASD / 方向键：相对镜头移动；空格：跳跃；Shift：冲刺。
+- 拖动调整镜头，滚轮调整距离；Esc 暂停/继续，页面失焦自动暂停。
+- 红圈预警激光，需要移出攻击区域；橙圈预警陨石，可以跳过冲击波。
+- 鞋子保持固定，重力与相机以 2°/秒平滑转向，鞋侧和鞋底逐渐成为可落脚区域。
+- 保留最后一次本地修改：跳跃最高高度为初版的 2 倍，激光在最高点仍有正确判定。
+- 窄屏提供触控方向键、跳跃和冲刺按钮。
 
-## Name
-Choose a self-explaining name for your project.
+## 目录与接口
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+```text
+run-on-shoes/
+├── index.html / run_on_shoes.ts   # 静态页面与单次 Demo 调用
+├── setup.sh / dev_setup.sh
+├── scripts/setup_common.sh
+├── run_on_shoes/
+│   ├── Demo/                    # React 界面与挂载
+│   ├── API/                     # 公共接口、调用默认值
+│   ├── Module/                  # 静态能力委托
+│   ├── Config/                  # 不可变玩法参数与资源路径
+│   ├── Dataset/                 # glTF 加载、解码及失败清理
+│   ├── Method/                  # 地形、重力、移动、灾害等独立函数
+│   ├── Types/                   # 纯类型契约
+│   └── Test/                    # 真实模型、接口、分层、资源回归
+├── app/globals.css
+├── components/ui/slider.tsx
+├── public/models/               # 完整运行模型
+└── .github/workflows/pages.yml
+```
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+按 `build-project-architecture` 分层，使用 TypeScript 适配浏览器项目，未引入无运行职责的 Python 或神经网络目录。完整职责、原子函数契约和迁移说明见 [ARCHITECTURE.md](docs/ARCHITECTURE.md)。
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```ts
+import { createGame } from './run_on_shoes/API/run_on_shoes.ts';
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+const game = await createGame(
+  container,
+  (snapshot) => {
+    // 将 snapshot 展示到自己的界面。
+  },
+  { ratio: 100, baseUrl: './' },
+);
+await game.load();
+game.start();
+// 页面卸载时调用；重复调用安全。
+game.dispose();
+```
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+三维运行代码延迟加载；控制器暴露加载、开始、全景、暂停、比例、声音、输入、跳跃、冲刺、快照与释放。没有任何导入即创建 WebGL 的副作用。
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+## 模型与来源
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+鞋子约 498 万三角面，两张 8192×8192 纹理；保留 Meshopt 压缩后的真实几何与原始纹理字节。角色约 5 万面，保留蒙皮和 Idle、Run、Jump 动画。首次加载模型总量约 46 MB，保持原有模型精度。
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+模型全部随仓库提供，不需要再次调用生成服务。7 个运行模型文件逐一与原项目校验 SHA-256 一致，记录在 [资源清单](docs/assets-manifest.json)。生成阶段的原始 GLB 和可编辑 Blender 工程仍在原归档任务的交付目录，不属于网页运行依赖。
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+来源：归档任务「2图 - 鞋子跑酷游戏」，原源码提交 `07af9d1878807da93d2bf2d983e892aff11975c4`。跑步动画适配自 Quaternius CC0 动画库；详细来源见 [ASSET_CREDITS.md](ASSET_CREDITS.md)。

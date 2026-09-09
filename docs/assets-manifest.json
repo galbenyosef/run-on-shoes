@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "07af9d1878807da93d2bf2d983e892aff11975c4",
+  "files": {
+    "public/models/runner.glb": {
+      "bytes": 5767872,
+      "sha256": "01e459510832082c2f9cc1fa8ed106c9b1a2b110f0fb67ae3ac2021922b4c188"
+    },
+    "public/models/shoe-master/409d9b383e5da96f.bin": {
+      "bytes": 3551332,
+      "sha256": "409d9b383e5da96f2de8ec771d08cc207ae04c7f5da27d30a86e85177e28a80e"
+    },
+    "public/models/shoe-master/47e5890caa3ee8ad.bin": {
+      "bytes": 5822406,
+      "sha256": "47e5890caa3ee8ad08d4897b23629f973dc3b54ef0632335789f73dd14e9820d"
+    },
+    "public/models/shoe-master/6a8f974f84f58618.bin": {
+      "bytes": 11720481,
+      "sha256": "6a8f974f84f586189d85560c2fee68a3186196679e07359f8fc9b2c6bd3cc0e7"
+    },
+    "public/models/shoe-master/88d51b378f258409.bin": {
+      "bytes": 18938635,
+      "sha256": "88d51b378f258409517fbedfeb8531985bfd0ae0aebd3ac03840ab51bc040160"
+    },
+    "public/models/shoe-master/c08fc1c9733cac0f.bin": {
+      "bytes": 2765564,
+      "sha256": "c08fc1c9733cac0fe514e4d1d434bc62d6be18d6d95aa48e28b08429d367e31e"
+    },
+    "public/models/shoe-master/model.gltf": {
+      "bytes": 2114,
+      "sha256": "1f4ee17f47fa7adee6977e4e8be771d74c4917541d6c4e61de071b0943adb887"
+    }
+  }
+}
