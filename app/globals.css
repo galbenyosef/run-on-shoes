@@ -175,6 +175,23 @@ a:focus-visible {
   overflow: hidden;
   font-family: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
+
+.powered-by {
+  position: fixed;
+  right: max(10px, env(safe-area-inset-right));
+  bottom: max(6px, env(safe-area-inset-bottom));
+  z-index: 30;
+  padding: 4px 8px;
+  border: 1px solid #ffffff1a;
+  border-radius: 5px;
+  background: #0b1117e6;
+  color: #e3edee;
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.15px;
+  white-space: nowrap;
+  pointer-events: none;
+}
 .world,
 .vignette {
   position: absolute;

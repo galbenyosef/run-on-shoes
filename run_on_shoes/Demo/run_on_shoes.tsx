@@ -66,6 +66,7 @@ export default function RunOnShoesDemo() {
   const active = state.mode === 'playing' || state.mode === 'paused';
   return (
     <main className={'game-shell mode-' + state.mode}>
+      <div className="powered-by">Powered by GPT6 and Hi3D</div>
       <div ref={host} className="world" aria-label="可交互的鞋子三维世界" />
       <div className="vignette" />
       <header className="topbar">
