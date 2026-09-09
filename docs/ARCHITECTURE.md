@@ -53,7 +53,7 @@ React 挂载、CSS、UI Slider 与通用 className 工具是浏览器框架适�
 
 Vite 以 index.html 为入口，使用相对 `base: './'`；页面内导航和模型请求也使用相对路径，glTF 缓冲 URI 相对 glTF 自身解析。因此同一 dist 支持站点根、GitHub 项目路径及自定义域名。字体使用系统字体栈，无外部字体服务。
 
-GitHub Actions 在 main 推送和手动触发时检查、构建、上传 dist 并部署 Pages。PR 只检查。发布到 GitHub 属于后续托管步骤，本次准备完整可发布仓库，不修改原 GitLab origin。
+GitHub Actions 在 main 推送和手动触发时检查、构建、上传 dist 并部署 Pages。PR 只检查。公开仓库为 `565353780/run-on-shoes`，通过独立的 `github` 远端发布，保留原 GitLab origin。
 
 ## 安装政策
 

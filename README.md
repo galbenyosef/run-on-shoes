@@ -2,6 +2,8 @@
 
 在巨型鞋子表面奔跑、跳跃和冲刺，躲避天空中的激光与陨石。由两张参考图生成的鞋子和角色模型构成真实三维关卡。
 
+在线游玩：[微步 MICROSTRIDE](https://565353780.github.io/run-on-shoes/) · 公开源码：[565353780/run-on-shoes](https://github.com/565353780/run-on-shoes)。
+
 这是 **React + TypeScript + Three.js 的纯前端游戏**。Vite 构建输出到 `dist/`，可直接部署到 GitHub Pages 或其他静态 HTTP 托管。运行时无需 Node 服务、Hi3D API、密钥、数据库或外部模型 CDN；Node 仅用于安装、开发和构建。
 
 ## 本地运行
@@ -32,7 +34,7 @@ npm run preview   # 预览 dist/ 中的生产版本
 2. 在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。
 3. 推送 `main` 或手动运行 **Deploy game to GitHub Pages** 工作流。检查通过后，它会发布 `dist/`；页面地址见工作流的部署结果。
 
-仓库已提供 [Pages 工作流](.github/workflows/pages.yml)。Pull Request 只进行构建和检查，不部署。当前本地仓库原有 `origin` 为 GitLab；迁移没有修改你的远端配置。发布到 GitHub 前需要使用对应的 GitHub 仓库。
+仓库已提供 [Pages 工作流](.github/workflows/pages.yml)。Pull Request 只进行构建和检查，不部署。本地保留原 GitLab `origin`，新增 `github` 远端用于发布到 `565353780/run-on-shoes`。后续运行 `git push github main` 即可触发更新。
 
 Vite 使用 `base: './'`，模型也按页面路径加载。同一份产物支持 `https://用户名.github.io/仓库名/`、站点根目录和自定义域名，不要求仓库一定叫 `run-on-shoes`。网页内返回首页的链接也使用相对路径。配置依据：[Vite 静态部署](https://vite.dev/guide/static-deploy.html)及[相对 base](https://vite.dev/guide/build.html#relative-base)。
 
