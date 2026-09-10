@@ -1,6 +1,8 @@
 # 项目维护约束
 
-- 这是纯前端游戏。部署产物仅为 `dist/` 下的 HTML、CSS、JS 和本地模型；不引入服务器、SSR、账户凭据或托管平台运行时。
+- 游戏本体仍为 GitHub Pages 上的纯前端，`dist/` 仅用于游戏静态产物。用户已授权增加匿名排行榜服务：仅排行榜通过独立 Sites Worker + D1 持久化，构建到 `service-dist/`。不得将服务端密钥放进网页，也不要迁移游戏到服务端渲染。
+- 根 `.openai/hosting.json` 属于排行榜服务；Sites 发布只打包 `service-dist/` 中的 Worker、逻辑绑定与 Drizzle 迁移，游戏仍由 Pages 工作流发布。
+- 排行榜写入必须校验匿名玩家令牌、本局编号、计时和成绩范围；提交事务幂等，每位玩家保留最好成绩。GitHub 镜像只允许导出显式的公开字段。
 - 遵循 `build-project-architecture` 的职责边界，并以 TypeScript 适配其目录结构：根入口 → Demo → API → Module → Method / Dataset / Config。
 - 根 `run_on_shoes.ts` 除 import 外只调用一次无参数 Demo 启动函数。Demo 通过 API 使用游戏能力，Module 类只暴露静态委托方法。Method 使用显式状态参数，Types 仅包含类型。
 - 默认公共参数在 API，玩法及资源策略在 Config，模型加载/解码在 Dataset。不要让业务依赖反向引用上层；架构测试必须通过。

@@ -5,7 +5,6 @@ import {
   Expand,
   Pause,
   Play,
-  RotateCcw,
   Volume2,
   VolumeX,
   Zap,
@@ -15,6 +14,11 @@ import {
   Heart,
 } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
+import {
+  createLeaderboardClient,
+  type LeaderboardClient,
+} from '../API/leaderboard.ts';
+import OnlineLeaderboardResult from './leaderboard_result.tsx';
 import {
   createGame,
   DEFAULT_RATIO,
@@ -30,6 +34,14 @@ export default function RunOnShoesDemo() {
     [ratio, setRatio] = useState(DEFAULT_RATIO),
     [muted, setMuted] = useState(false);
   const [error, setError] = useState('');
+  const [leaderboard] = useState<LeaderboardClient>(() =>
+    createLeaderboardClient(),
+  );
+  const [registration, setRegistration] = useState<{
+    runId: string;
+    promise: Promise<string | null>;
+  } | null>(null);
+  const registeredRunId = useRef<string | null>(null);
   useEffect(() => {
     let disposed = false;
     let session: GameController | undefined;
@@ -37,7 +49,17 @@ export default function RunOnShoesDemo() {
       if (disposed || !host.current) return;
       try {
         const g = await createGame(host.current, (snapshot) => {
-          if (!disposed) setState(snapshot);
+          if (!disposed) {
+            if (snapshot.runId && snapshot.runId !== registeredRunId.current) {
+              const promise = leaderboard.start(snapshot.runId).then(
+                () => null,
+                () => 'offline',
+              );
+              registeredRunId.current = snapshot.runId;
+              setRegistration({ runId: snapshot.runId, promise });
+            }
+            setState(snapshot);
+          }
         });
         if (disposed) {
           g.dispose();
@@ -56,7 +78,7 @@ export default function RunOnShoesDemo() {
       session?.dispose();
       if (game.current === session) game.current = null;
     };
-  }, []);
+  }, [leaderboard]);
   const start = () => game.current?.start();
   const changeRatio = (v: number | readonly number[]) => {
     const r = Array.isArray(v) ? v[0] : (v as number);
@@ -296,35 +318,21 @@ export default function RunOnShoesDemo() {
           </section>
         </div>
       )}
-      {state.mode === 'gameover' && (
-        <div className="modal-shade">
-          <section className="game-modal">
-            <span className="eyebrow">EXPEDITION COMPLETE</span>
-            <h2>
-              每一步，
-              <br />
-              都算数。
-            </h2>
-            <div className="result-time">
-              {state.time.toFixed(1)}
-              <span>秒</span>
-            </div>
-            <p>
-              躲过 {state.dodged} 次袭击 · 抵达第 {state.wave} 波
-            </p>
-            <button className="start-button" onClick={start}>
-              <RotateCcw size={18} />
-              再次出发
-              <ArrowUpRight size={20} />
-            </button>
-            <button
-              className="text-button"
-              onClick={() => game.current?.overview()}
-            >
-              返回鞋子全景
-            </button>
-          </section>
-        </div>
+      {state.mode === 'gameover' && state.runId && registration && (
+        <OnlineLeaderboardResult
+          key={state.runId}
+          client={leaderboard}
+          runId={state.runId}
+          registration={registration.promise}
+          score={{
+            timeMs: Math.floor(state.time * 10) * 100,
+            dodged: state.dodged,
+            distanceMm: Math.floor(state.distance * 1000),
+            ratio,
+          }}
+          onRestart={start}
+          onOverview={() => game.current?.overview()}
+        />
       )}
       <footer>
         <div>

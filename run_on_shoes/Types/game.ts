@@ -3,6 +3,7 @@ import type { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import type { TerrainState } from './terrain.ts';
 import type { GravityState } from './gravity.ts';
 export type Snapshot = {
+  runId: string | null;
   mode: string;
   time: number;
   health: number;

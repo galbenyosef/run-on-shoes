@@ -30,6 +30,7 @@ export function start(ctx: GameContext) {
   ctx.stage.quaternion.identity();
   ctx.spawnPoint.copy(findSpawn(ctx.terrain).point);
   ctx.state = {
+    runId: crypto.randomUUID(),
     mode: 'playing',
     time: 0,
     health: GAME_CONFIG.health,

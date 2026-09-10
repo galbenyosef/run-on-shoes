@@ -1,0 +1,40 @@
+name: Sync public leaderboard to GitHub
+
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/leaderboard.yml'
+      - 'scripts/sync_leaderboard.ts'
+      - 'run_on_shoes/Config/leaderboard.ts'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: leaderboard-mirror
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: '22'
+      - run: node --experimental-strip-types scripts/sync_leaderboard.ts
+      - name: Save changed public scores
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add leaderboard/scores.json leaderboard/README.md
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m 'Update public leaderboard snapshot'
+          git pull --rebase origin main
+          git push origin HEAD:main

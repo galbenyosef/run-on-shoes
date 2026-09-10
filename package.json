@@ -6,6 +6,9 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "build:leaderboard": "node scripts/build_leaderboard.mjs",
+    "db:generate": "drizzle-kit generate",
+    "sync:leaderboard": "node --experimental-strip-types scripts/sync_leaderboard.ts",
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "start": "vite preview --host 127.0.0.1",
@@ -34,6 +37,9 @@
     "@types/react-dom": "19.2.3",
     "@types/three": "^0.180.0",
     "@vitejs/plugin-react": "6.0.2",
+    "drizzle-kit": "0.31.10",
+    "drizzle-orm": "0.45.2",
+    "esbuild": "0.28.2",
     "oxfmt": "0.61.0",
     "oxlint": "1.76.0",
     "oxlint-tsgolint": "7.0.2001",

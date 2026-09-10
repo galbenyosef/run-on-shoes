@@ -4,6 +4,7 @@ import { GAME_CONFIG } from '../Config/game.ts';
 
 export function initialSnapshot(): Snapshot {
   return {
+    runId: null,
     mode: 'loading',
     time: 0,
     health: GAME_CONFIG.health,
