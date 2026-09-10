@@ -1,5 +1,16 @@
 {
   "schemaVersion": 1,
-  "updatedAt": null,
-  "entries": []
+  "updatedAt": "2026-09-10T03:03:01.956Z",
+  "entries": [
+    {
+      "playerId": "5dfa09c502a98be68a22c5438f9ed6ab593f0852d07de22af22d9a97f77e6841",
+      "username": "部署验收",
+      "runId": "ef14d887-19b2-417e-b7e1-94307bb30e91",
+      "timeMs": 15000,
+      "dodged": 3,
+      "distanceMm": 0,
+      "ratio": 100,
+      "submittedAt": "2026-09-10T03:03:01.956Z"
+    }
+  ]
 }
