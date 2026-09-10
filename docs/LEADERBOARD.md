@@ -4,6 +4,8 @@
 
 服务：https://microstride-leaderboard.fluffy-bud-2038.chatgpt.site
 
+当前状态：功能与自动化测试已完成，服务尚未发布。Sites 源码接收端返回 HTTP 500，正在等待平台恢复或备用 Cloudflare 账号登录。原 GitHub Pages 游戏仍可游玩。
+
 ## 职责与持久化
 
 用户选择“只填昵称即可提交”，授权为原纯静态游戏增加一个公开写入服务。游戏与模型仍由 GitHub Pages 托管；根 `.openai/hosting.json` 仅标识排行榜服务。`service-dist/` 与游戏 `dist/` 分开，服务发布不包含三维模型。
@@ -47,6 +49,8 @@ npm run build:leaderboard
 第一项完成类型、真实模型、分层、SQLite 与客户端集成、游戏生产构建及静态资源检查。服务构建使用 esbuild 输出 Cloudflare Worker 到 `service-dist/dist/server/index.js`，同时复制逻辑绑定与数据库迁移供 Sites 打包；它不会改动游戏 `dist/`。
 
 使用 Sites 的 `package-site.sh service-dist ARCHIVE_PATH` 打包，源代码推送到该 Site 绑定的源仓库后，以相同提交 SHA 保存并公开发布版本。服务 URL、D1 绑定及来源已经写在仓库中，不需要浏览器持有任何运维凭据。所有 schema 修改都应生成并检查新的 Drizzle 迁移；已应用迁移不得改写。
+
+Sites 发布源码可使用仅包含排行榜代码的独立 checkout，避免上传不参与服务构建的游戏模型。该 checkout 复用同一个 project_id，保留与本仓库一致的 Worker、Config、数据库迁移和测试，并独立保存源码 SHA；不得因此创建第二个 Sites 项目。
 
 前端通过 `git push github main` 触发 Pages 部署。`.github/workflows/leaderboard.yml` 每 15 分钟及手动触发时读取服务，只有榜单内容变化时才提交 `leaderboard/` 文件。任务失败保留上一份镜像；游戏内仍读取实时榜单。GitHub 调度可能延迟，公开仓库长期无活动时定时任务可能停用。
 

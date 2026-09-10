@@ -94,7 +94,10 @@ export default function LeaderboardResult(props: Props) {
               type="button"
               className="text-button"
               disabled={props.submitting}
-              onClick={() => setSkipped(true)}
+              onClick={() => {
+                setValidationError('');
+                setSkipped(true);
+              }}
             >
               跳过填写，查看排行榜
             </button>
