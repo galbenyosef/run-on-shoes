@@ -1,7 +1,17 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-10T03:15:25.195Z",
+  "updatedAt": "2026-09-10T03:46:03.076Z",
   "entries": [
+    {
+      "playerId": "15ec17674e04cd2c0ec3abb339adc55c6a39eb13161a390e536eb7ba1ea56a97",
+      "username": "huihui",
+      "runId": "47f42dfc-20f1-47f6-af66-9394754396ba",
+      "timeMs": 28800,
+      "dodged": 11,
+      "distanceMm": 62992,
+      "ratio": 100,
+      "submittedAt": "2026-09-10T03:46:03.076Z"
+    },
     {
       "playerId": "5dfa09c502a98be68a22c5438f9ed6ab593f0852d07de22af22d9a97f77e6841",
       "username": "部署验收",
