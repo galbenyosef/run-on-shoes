@@ -36,7 +36,7 @@ export function createLeaderboardClient(
   const request = (path: string, body?: unknown, signal?: AbortSignal) =>
     requestLeaderboard(
       options.fetcher,
-      new URL(path, options.serviceUrl).href,
+      new URL(path.replace(/^\//, ''), options.serviceUrl.replace(/\/?$/, '/')).href,
       playerToken,
       body,
       signal,

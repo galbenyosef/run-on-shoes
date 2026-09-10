@@ -11,7 +11,6 @@ await build({
   target: 'es2022',
   outfile: 'service-dist/dist/server/index.js',
 });
-await cp('.openai', 'service-dist/.openai', { recursive: true });
 await cp('drizzle', 'service-dist/drizzle', { recursive: true });
 console.log(
   'Leaderboard Worker and database migrations built in service-dist/.',

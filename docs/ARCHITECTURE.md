@@ -51,7 +51,7 @@ React 挂载、CSS、UI Slider 与通用 className 工具是浏览器框架适�
 
 原版本的 Vinext、SSR、Cloudflare Worker、Wrangler、Sites 托管标识及未使用 UI 依赖均已移除。保留 React、Three.js、BVH、Slider 与实际使用的样式工具；沿用 npm 并更新锁文件。
 
-后续用户明确授权“昵称即可提交”的在线排行榜，为此仅给排行榜增加独立 Sites Worker + D1。游戏静态产物和部署地址保持原方案；新的根 `.openai/hosting.json` 属于排行榜服务，详见 [LEADERBOARD.md](LEADERBOARD.md)。这项有运行职责的服务是对最初“无服务器”范围的明确扩展。
+后续用户明确授权“昵称即可提交”的在线排行榜，为此仅给排行榜复用现有 Sites Worker，并增加独立 D1 数据表。游戏静态产物和部署地址保持原方案；部署由共享服务 checkout 管理，本仓库不直接覆盖其 Worker，详见 [LEADERBOARD.md](LEADERBOARD.md)。这项有运行职责的服务是对最初“无服务器”范围的明确扩展。
 
 Vite 以 index.html 为入口，使用相对 `base: './'`；页面内导航和模型请求也使用相对路径，glTF 缓冲 URI 相对 glTF 自身解析。因此同一 dist 支持站点根、GitHub 项目路径及自定义域名。字体使用系统字体栈，无外部字体服务。
 

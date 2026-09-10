@@ -2,13 +2,13 @@
 
 游戏：https://565353780.github.io/run-on-shoes/
 
-服务：https://microstride-leaderboard.fluffy-bud-2038.chatgpt.site
+服务：https://aperture-flight-leaderboard.fluffy-bud-2038.chatgpt.site/microstride/
 
-当前状态：功能与自动化测试已完成，服务尚未发布。Sites 源码接收端返回 HTTP 500，正在等待平台恢复或备用 Cloudflare 账号登录。原 GitHub Pages 游戏仍可游玩。
+排行榜复用雕塑飞行游戏的在线服务。鞋子游戏使用独立接口命名空间和三张数据表，两个游戏的成绩及排名互不混合。
 
 ## 职责与持久化
 
-用户选择“只填昵称即可提交”，授权为原纯静态游戏增加一个公开写入服务。游戏与模型仍由 GitHub Pages 托管；根 `.openai/hosting.json` 仅标识排行榜服务。`service-dist/` 与游戏 `dist/` 分开，服务发布不包含三维模型。
+用户选择“只填昵称即可提交”，授权为原纯静态游戏增加一个公开写入服务。游戏与模型仍由 GitHub Pages 托管；排行榜的部署配置保存在共享服务 checkout 中。`service-dist/` 是可独立运行的参考 Worker 产物，与游戏 `dist/` 分开。
 
 入口 `leaderboard_worker.ts` 只调用 Demo，依赖仍为 Demo → API → Module → Method / Dataset / Config。客户端与服务端分别拥有 `leaderboard_client`、`leaderboard_server` 能力；服务端运行于 Cloudflare Workers，不引入 SSR。
 
@@ -36,7 +36,7 @@
 - `GET /api/export?cursor=...`：公开字段分页导出，最多 500 条，供 GitHub 同步。
 - `GET /health`：服务标识。
 
-游戏的写入与个人排名请求携带 `X-Player-Token`，公开写入允许的 Origin 在 Config 中明确列出。CORS 不代替身份校验。支持 15 秒请求超时、重试和限流错误；不会将用户名直接拼入 SQL。
+以上路径均相对于服务地址 `/microstride/`。游戏的写入与个人排名请求携带 `X-Player-Token`，公开写入允许的 Origin 在 Config 中明确列出。CORS 不代替身份校验。支持 15 秒请求超时、重试和限流错误；不会将用户名直接拼入 SQL。
 
 ## 构建与发布
 
@@ -46,11 +46,19 @@ npm run lint
 npm run build:leaderboard
 ```
 
-第一项完成类型、真实模型、分层、SQLite 与客户端集成、游戏生产构建及静态资源检查。服务构建使用 esbuild 输出 Cloudflare Worker 到 `service-dist/dist/server/index.js`，同时复制逻辑绑定与数据库迁移供 Sites 打包；它不会改动游戏 `dist/`。
+第一项完成类型、真实模型、分层、SQLite 与客户端集成、游戏生产构建及静态资源检查。`build:leaderboard` 输出独立 Worker 作为参考产物；不要直接用它覆盖共享服务，否则会移除飞行游戏接口。
 
-使用 Sites 的 `package-site.sh service-dist ARCHIVE_PATH` 打包，源代码推送到该 Site 绑定的源仓库后，以相同提交 SHA 保存并公开发布版本。服务 URL、D1 绑定及来源已经写在仓库中，不需要浏览器持有任何运维凭据。所有 schema 修改都应生成并检查新的 Drizzle 迁移；已应用迁移不得改写。
+正式部署使用现有共享服务项目 `appgprj_6aa17e85770481919de166e32e0e9db1`，服务 checkout 为 `~/github/fly-around-sculpture-leaderboard`：
 
-Sites 发布源码可使用仅包含排行榜代码的独立 checkout，避免上传不参与服务构建的游戏模型。该 checkout 复用同一个 project_id，保留与本仓库一致的 Worker、Config、数据库迁移和测试，并独立保存源码 SHA；不得因此创建第二个 Sites 项目。
+```sh
+node scripts/prepare_shared_leaderboard.mjs ~/github/fly-around-sculpture-leaderboard
+```
+
+该脚本同步鞋子模块、框架路由和 schema，并保留原有飞行模块。在共享服务目录运行 `npm run db:generate`，检查迁移只新增鞋子相关表；随后执行类型检查、`npm test` 和 `npm run build`。两款游戏的全部测试都应通过。最后用 Sites 标准流程保存并公开发布该共享服务。更新任一游戏前应读取服务最新代码，保留两套接口和所有已应用迁移。
+
+首次合并使用新增迁移 `0001_dashing_doctor_octopus.sql`，原飞行游戏的 `0000` 迁移未变。框架路由只注入宿主的 DB 绑定并调用 Demo；游戏业务仍在既有分层中。服务 URL 和 CORS 来源均为公开配置，浏览器不持有运维凭据。
+
+早期未发布的独立 Sites 项目 `appgprj_6aa213c807b88191a9b1135d342ef21a` 因源码接收端 HTTP 500 弃用；不要为此重复创建项目。
 
 前端通过 `git push github main` 触发 Pages 部署。`.github/workflows/leaderboard.yml` 每 15 分钟及手动触发时读取服务，只有榜单内容变化时才提交 `leaderboard/` 文件。任务失败保留上一份镜像；游戏内仍读取实时榜单。GitHub 调度可能延迟，公开仓库长期无活动时定时任务可能停用。
 

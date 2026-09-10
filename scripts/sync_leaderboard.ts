@@ -12,7 +12,7 @@ let cursor = '';
 for (;;) {
   if (cursors.has(cursor)) throw new Error('Repeated leaderboard cursor');
   cursors.add(cursor);
-  const url = new URL('/api/export', LEADERBOARD_CONFIG.serviceUrl);
+  const url = new URL('api/export', LEADERBOARD_CONFIG.serviceUrl);
   if (cursor) url.searchParams.set('cursor', cursor);
   const response = await fetch(url, {
     signal: AbortSignal.timeout(30000),

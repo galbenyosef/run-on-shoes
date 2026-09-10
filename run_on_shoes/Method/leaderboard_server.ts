@@ -46,7 +46,11 @@ export async function handleLeaderboardRequest(
       throw new LeaderboardError('该来源不可提交成绩。', 403);
     if (request.method === 'OPTIONS')
       return new Response(null, { status: 204, headers });
-    const path = new URL(request.url).pathname;
+    const pathname = new URL(request.url).pathname;
+    const prefix = LEADERBOARD_CONFIG.routePrefix;
+    const path = pathname.startsWith(`${prefix}/`)
+      ? pathname.slice(prefix.length)
+      : pathname;
     if (request.method === 'GET' && (path === '/' || path === '/health'))
       return json({
         service: 'MICROSTRIDE leaderboard',

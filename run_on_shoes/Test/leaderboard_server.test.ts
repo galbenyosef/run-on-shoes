@@ -316,3 +316,28 @@ void test('Storage failure and rate limit return explicit failure without claimi
     sqlite.close();
   }
 });
+
+void test('Shared-host namespace is retained for registration, submission, read and export', async () => {
+  const { sqlite, fetcher, send } = database();
+  try {
+    const paths: string[] = [];
+    const client = createLeaderboardClient({
+      serviceUrl: 'https://test.invalid/microstride/',
+      storage: null,
+      fetcher: async (input, init) => {
+        paths.push(new URL(input instanceof Request ? input.url : input).pathname);
+        return fetcher(input, init);
+      },
+    });
+    const runId = crypto.randomUUID();
+    await client.start(runId);
+    assert.equal((await client.submit(runId, '鞋子玩家', score)).personal?.rank, 1);
+    assert.equal((await client.read()).totalPlayers, 1);
+    assert.deepEqual(paths, ['/microstride/api/runs', '/microstride/api/scores', '/microstride/api/leaderboard']);
+    assert.equal((await send('/microstride/api/export')).status, 200);
+    assert.equal((await send('/microstride/health')).status, 200);
+    assert.equal((await send('/another-game/api/leaderboard')).status, 404);
+  } finally {
+    sqlite.close();
+  }
+});

@@ -4,7 +4,7 @@
 
 在线游玩：[微步 MICROSTRIDE](https://565353780.github.io/run-on-shoes/) · 公开源码：[565353780/run-on-shoes](https://github.com/565353780/run-on-shoes)。
 
-这是 **React + TypeScript + Three.js 的纯前端游戏**。Vite 构建输出到 `dist/`，可直接部署到 GitHub Pages 或其他静态 HTTP 托管。游戏无需 Node 服务、Hi3D API、密钥或外部模型 CDN。用户授权增加的在线排行榜单独使用 Sites Worker + D1 保存成绩；服务不可用时仍可正常游玩。
+这是 **React + TypeScript + Three.js 的纯前端游戏**。Vite 构建输出到 `dist/`，可直接部署到 GitHub Pages 或其他静态 HTTP 托管。游戏无需 Node 服务、Hi3D API、密钥或外部模型 CDN。用户授权增加的在线排行榜复用已上线的 Sites 服务，并以独立 D1 数据表保存成绩；服务不可用时仍可正常游玩。
 
 ## 本地运行
 
