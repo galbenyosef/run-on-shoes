@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-10T03:03:01.956Z",
+  "updatedAt": "2026-09-10T03:15:25.195Z",
   "entries": [
     {
       "playerId": "5dfa09c502a98be68a22c5438f9ed6ab593f0852d07de22af22d9a97f77e6841",
@@ -11,6 +11,26 @@
       "distanceMm": 0,
       "ratio": 100,
       "submittedAt": "2026-09-10T03:03:01.956Z"
+    },
+    {
+      "playerId": "6711ad3a04ca9edc6cc37291ede2111cba8ebdf67d83f442674717c321150ce2",
+      "username": "peter",
+      "runId": "26f10dea-08aa-421e-8b19-8077e62fc4d9",
+      "timeMs": 57400,
+      "dodged": 31,
+      "distanceMm": 170595,
+      "ratio": 100,
+      "submittedAt": "2026-09-10T03:15:25.195Z"
+    },
+    {
+      "playerId": "cac61d8ad71d293abc54a9b9e92bc2d18ecc217111674de82277ea6be85cfc3f",
+      "username": "lili",
+      "runId": "3485f3da-b7a2-49c3-a5e9-fc22d65d3add",
+      "timeMs": 23000,
+      "dodged": 6,
+      "distanceMm": 74924,
+      "ratio": 100,
+      "submittedAt": "2026-09-10T03:10:43.720Z"
     }
   ]
 }
