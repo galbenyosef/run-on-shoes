@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-10T03:46:03.076Z",
+  "updatedAt": "2026-09-11T03:24:23.611Z",
   "entries": [
     {
       "playerId": "15ec17674e04cd2c0ec3abb339adc55c6a39eb13161a390e536eb7ba1ea56a97",
@@ -31,6 +31,16 @@
       "distanceMm": 170595,
       "ratio": 100,
       "submittedAt": "2026-09-10T03:15:25.195Z"
+    },
+    {
+      "playerId": "875b5cf31411973282b85a1cc31799711afdd4264dfeced64415518e109b1bdb",
+      "username": "LBL",
+      "runId": "0e07eb61-bac4-4237-8e2e-4c709d515cf9",
+      "timeMs": 84500,
+      "dodged": 55,
+      "distanceMm": 333932,
+      "ratio": 100,
+      "submittedAt": "2026-09-11T03:24:23.611Z"
     },
     {
       "playerId": "cac61d8ad71d293abc54a9b9e92bc2d18ecc217111674de82277ea6be85cfc3f",
